@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/studentListFragment">
+    app:startDestination="@id/carFragment">
 
     <fragment
         android:id="@+id/studentDetailFragment"
@@ -19,4 +19,9 @@
             android:id="@+id/actionDetailFragment"
             app:destination="@id/studentDetailFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/carFragment"
+        android:name="com.example.studentapp.view.CarFragment"
+        android:label="fragment_car"
+        tools:layout="@layout/fragment_car" />
 </navigation>

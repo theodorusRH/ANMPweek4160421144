@@ -8,24 +8,21 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.studentapp.R
-import com.example.studentapp.databinding.FragmentStudentListBinding
-import com.example.studentapp.databinding.StudentListItemBinding
-import com.example.studentapp.viewmodel.ListViewModel
+import com.example.studentapp.databinding.FragmentCarBinding
+import com.example.studentapp.viewmodel.CarViewModel
 
+class CarFragment : Fragment() {
 
-class StudentListFragment : Fragment() {
-
-    private lateinit var viewModel:ListViewModel
-    private lateinit var binding: FragmentStudentListBinding
-    private val studentListAdapter = StudentListAdapter(arrayListOf())
+    private lateinit var carModelView: CarViewModel
+    private lateinit var binding: FragmentCarBinding
+    private val carListAdapter = CarListAdapter(arrayListOf())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        binding = FragmentStudentListBinding.inflate(inflater,container,false)
+        binding = FragmentCarBinding.inflate(inflater,container,false)
 
         return binding.root
     }
@@ -33,17 +30,17 @@ class StudentListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this).get(ListViewModel::class.java)
-        viewModel.refresh()
+        carModelView = ViewModelProvider(this).get(carModelView::class.java)
+        carModelView.refresh()
 
         binding.recView.layoutManager = LinearLayoutManager(context)
-        binding.recView.adapter = studentListAdapter
+        binding.recView.adapter = carListAdapter
 
         binding.refreshLayout.setOnRefreshListener {
             binding.recView.visibility= View.GONE
             binding.textError.visibility = View.GONE
             binding.progressLoad.visibility = View.VISIBLE
-            viewModel.refresh()
+            carModelView.refresh()
             binding.refreshLayout.isRefreshing = false
 
         }
@@ -51,9 +48,7 @@ class StudentListFragment : Fragment() {
     }
 
     fun observeViewModel(){
-        viewModel.studentsLD.observe(viewLifecycleOwner, Observer{studentListAdapter.updateStudentList(it)})
-
-        viewModel.loadingLD.observe(viewLifecycleOwner,Observer{
+        carModelView.loadingLD.observe(viewLifecycleOwner,Observer{
             if(it == true){
                 binding.recView.visibility = View.GONE
                 binding.progressLoad.visibility = View.VISIBLE
@@ -63,7 +58,7 @@ class StudentListFragment : Fragment() {
             }
         })
 
-        viewModel.studentLoadErrorLD.observe(viewLifecycleOwner,Observer{
+        carModelView.carLoadErrorLD.observe(viewLifecycleOwner,Observer{
             if(it == true) {
                 binding.textError?.visibility = View.VISIBLE
             } else {
@@ -71,6 +66,5 @@ class StudentListFragment : Fragment() {
             }
         })
     }
-
 
 }

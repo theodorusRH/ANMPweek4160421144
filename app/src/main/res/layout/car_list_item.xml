@@ -24,7 +24,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/imageCar"
+                android:id="@+id/imageStudent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +38,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:text="ID"
-                app:layout_constraintStart_toEndOf="@+id/imageCar"
+                app:layout_constraintStart_toEndOf="@+id/imageStudent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -48,7 +48,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:text="Maker"
-                app:layout_constraintStart_toEndOf="@+id/imageCar"
+                app:layout_constraintStart_toEndOf="@+id/imageStudent"
                 app:layout_constraintTop_toBottomOf="@+id/txtID" />
 
             <TextView
@@ -58,7 +58,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:text="Model"
-                app:layout_constraintStart_toEndOf="@+id/imageCar"
+                app:layout_constraintStart_toEndOf="@+id/imageStudent"
                 app:layout_constraintTop_toBottomOf="@+id/txtName" />
 
             <TextView

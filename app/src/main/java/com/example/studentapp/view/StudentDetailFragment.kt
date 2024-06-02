@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.studentapp.R
@@ -39,6 +40,8 @@ class StudentDetailFragment : Fragment() {
         detailView = ViewModelProvider(this).get(DetailViewModel::class.java)
         detailView.fetch(id = String())
 
+        binding.updatelistener= this
+        binding.notifListener= this
         observeDetailModel()
     }
 
@@ -46,35 +49,52 @@ class StudentDetailFragment : Fragment() {
     fun observeDetailModel(){
 
         detailView.studentsLD.observe(viewLifecycleOwner, Observer {
-            var student = it
+            binding.student = it
 
-            val btnUpdate = view?.findViewById<Button>(R.id.btnUpdate)
-            btnUpdate?.setOnClickListener {
-                Observable.timer(5, TimeUnit.SECONDS)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe {
-                        Log.d("Messages", "five seconds")
-                        MainActivity.showNotification(
-                            student.name.toString(),
-                            "A new notification created",
-                            R.drawable.baseline_person_24
-                        )
-                    }
-            }
-
-            if (it == null) {
-            } else {
-                binding.txtID.setText(it.id)
-                binding.txtName.setText(it.name)
-                binding.txtBod.setText(it.dob)
-                binding.editTextText4.setText(it.phone)
-                val picasso = Picasso.Builder(binding.root.context)
-                picasso.listener{picasso,uri,exception->exception.printStackTrace()}
-                picasso.build().load(it.photourl).into(binding.imageView)
-            }
+//            val btnUpdate = view?.findViewById<Button>(R.id.btnUpdate)
+//            btnUpdate?.setOnClickListener {
+//                Observable.timer(5, TimeUnit.SECONDS)
+//                    .subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe {
+//                        Log.d("Messages", "five seconds")
+//                        MainActivity.showNotification(
+//                            student.name.toString(),
+//                            "A new notification created",
+//                            R.drawable.baseline_person_24
+//                        )
+//                    }
+//            }
+//
+//            if (it == null) {
+//            } else {
+//                binding.txtID.setText(it.id)
+//                binding.txtName.setText(it.name)
+//                binding.txtBod.setText(it.dob)
+//                binding.editTextText4.setText(it.phone)
+//                val picasso = Picasso.Builder(binding.root.context)
+//                picasso.listener{picasso,uri,exception->exception.printStackTrace()}
+//                picasso.build().load(it.photourl).into(binding.imageView)
+//            }
         })
+    }
+    override fun onNotifClickListener(v: View){
+        Observable.timer(3, TimerUnit.SECONDS)
+            .subscribeOn(scheduler.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe{
+                Log.d("Messages","please wait for 3 seconds")
+                MainActivity.showNotification(
+                    binding.student!!.name!!.toString(),
+                    "new notification",
+                    R.drawable.baseline_person_24
+                )
+                Log.d("Messages","notification")
+            }
+    }
 
+    override fun onUpdateClickListener(v: View) {
+        Log.d("update","success")
     }
 
 }
